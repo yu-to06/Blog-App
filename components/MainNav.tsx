@@ -1,13 +1,17 @@
+"use client";
+
 import {NavItem} from "@/types";
 import Link from "next/link";
-import {ReactNode} from "react";
+import {ReactNode, useState} from "react";
+import MobileNav from "./MobileNav";
 
 interface MainNavProps {
-  items?: NavItem[];
+  items: NavItem[];
   children?: ReactNode;
 }
 
 export default function MainNav({items}: MainNavProps) {
+  const [showMobileMenu, setshowMobileMenu] = useState<boolean>(false);
   return (
     <div className='flex items-center md:gap-10'>
       <Link href={"/"} className='hidden md:flex items-center space-x-2'>
@@ -24,6 +28,15 @@ export default function MainNav({items}: MainNavProps) {
           </Link>
         ))}
       </nav>
+
+      {/* ハンバーガー */}
+      <button
+        className='md:hidden'
+        onClick={() => setshowMobileMenu(!showMobileMenu)}
+      >
+        <span>Menu</span>
+      </button>
+      {showMobileMenu && <MobileNav items={items} />}
     </div>
   );
 }
